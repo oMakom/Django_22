@@ -1,5 +1,8 @@
 from django.shortcuts import render
 
 # Create your views here.
-def catalog(request):
-    return render(request, 'catalog.html')
+def home(request):
+    return render(request, 'home.html')
+
+def contacts(request):
+    return render(request, 'contacts.html')
