@@ -109,7 +109,8 @@
                     <!-- Колонка 1: Форма -->
                     <div class="col-12 col-md-5 mb-4 mb-md-0">
                         <div class="card border p-4 h-100">
-                            <form action="http://localhost:8080" method="POST">
+                            <form action="" method="POST">
+                                {% csrf_token %}
                                 <!-- Имя -->
                                 <div class="mb-4">
                                     <label for="name" class="form-label text-uppercase fw-bold small text-secondary">Имя</label>
