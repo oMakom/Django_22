@@ -1,0 +1,52 @@
+[
+{
+    "model": "catalog.product",
+    "pk": 5,
+    "fields": {
+        "name": "Умные часы SmartFit Pro",
+        "description": "Фитнес‑трекер с мониторингом сна, пульсом и GPS; синхронизация со смартфоном",
+        "image": "catalog/photo/smart_watch.jpeg",
+        "category": 5,
+        "price": "12990.00",
+        "created_at": "2026-09-29",
+        "updated_at": "2026-09-29"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 6,
+    "fields": {
+        "name": "Беговые кроссовки RunMax Air",
+        "description": "Лёгкие кроссовки с амортизирующей подошвой и дышащим верхом для бега и тренировок",
+        "image": "catalog/photo/RunMax_Air.jpeg",
+        "category": 6,
+        "price": "8490.00",
+        "created_at": "2026-09-29",
+        "updated_at": "2026-09-29"
+    }
+},
+{
+    "model": "catalog.category",
+    "pk": 5,
+    "fields": {
+        "name": "Электроника",
+        "description": "Гаджеты, бытовая техника и аксессуары для дома и офиса"
+    }
+},
+{
+    "model": "catalog.category",
+    "pk": 6,
+    "fields": {
+        "name": "Спортивная экипировка",
+        "description": "Товары для фитнеса, бега, командных видов спорта и активного отдыха"
+    }
+},
+{
+    "model": "catalog.category",
+    "pk": 7,
+    "fields": {
+        "name": "Товары для дома",
+        "description": "Текстиль, посуда, предметы декора и хозяйственные принадлежности для уюта"
+    }
+}
+]
