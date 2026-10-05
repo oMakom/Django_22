@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block content %}
+        <!-- ПРАВАЯ КОЛОНКА: Контент -->
+        <div class="col p-0 bg-white">
+            <div class="container-fluid py-4">
+
+                <!-- Заголовок -->
+                <h2 class="text-center text-dark mb-4">Описание товара</h2>
+
+                <!-- СЕТКА ТОВАРОВ -->
+                <!-- gx-4 / gy-4 - стандартные отступы Bootstrap -->
+                <div class="row gx-4 gy-4">
+
+                    <!-- Товар 1 -->
+                    <div class="col-6 col-md-4 d-flex">
+                        <div class="card h-100 border-0 shadow-sm d-flex flex-column">
+
+                            <!-- Картинка-заглушкачерез Bootstrap Ratio -->
+                            <!-- Это заменяет весь CSS для пропорций картинки -->
+                            <div class="ratio ratio-4x3 bg-light d-flex align-items-center justify-content-center text-muted">
+                                <span>Нет фото</span>
+                            </div>
+
+                            <!-- Тело карточки -->
+                            <div class="card-body flex-grow-1 d-flex flex-column">
+                                <p class="card-text text-muted small mb-auto">
+                                    Это описание товара. Текст автоматически растягивается, чтобы кнопки были внизу.
+                                </p>
+
+                                <!-- Нижняя панель -->
+                                <div class="mt-3 pt-3 border-top">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <button class="btn btn-sm btn-outline-secondary me-2">Просмотр</button>
+                                            <button class="btn btn-sm btn-outline-secondary">Ред.</button>
+                                        </div>
+                                        <span class="text-muted small">9 мин</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}
