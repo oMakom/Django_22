@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from .models import Product
 
@@ -7,7 +7,9 @@ from .models import Product
 def home(request):
     latest_products = Product.objects.order_by("-created_at")[:5]
     print(latest_products)
-    return render(request, "home.html")
+    products = Product.objects.all()
+    context = {"products": products}
+    return render(request, "home.html", context)
 
 
 def contacts(request):
@@ -18,3 +20,9 @@ def contacts(request):
         # Здесь мы возвращаем простой ответ
         return HttpResponse(f"Спасибо, {name}! Ваше сообщение получено.")
     return render(request, "contacts.html")
+
+
+def product_detail(request, product_id):
+    product = get_object_or_404(Product, product_id)
+    context = {"product": product}
+    return render(request, "product_detail.html", context)
