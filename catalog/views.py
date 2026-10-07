@@ -22,7 +22,7 @@ def contacts(request):
     return render(request, "contacts.html")
 
 
-def product_detail(request, product_id):
-    product = get_object_or_404(Product, product_id)
+def product_detail(request, pk):
+    product = get_object_or_404(Product, pk=pk)
     context = {"product": product}
     return render(request, "product_detail.html", context)
