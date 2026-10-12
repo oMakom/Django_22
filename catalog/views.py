@@ -1,28 +1,24 @@
-from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from .models import Product
-
+from django.views.generic import ListView, DetailView, TemplateView
 
 # Create your views here.
-def home(request):
-    latest_products = Product.objects.order_by("-created_at")[:5]
-    print(latest_products)
-    products = Product.objects.all()
-    context = {"products": products}
-    return render(request, "home.html", context)
+class ProductsListView(ListView):
+    model = Product
+    template_name = 'catalog/home.html'
+    context_object_name = 'products'
 
 
-def contacts(request):
-    if request.method == "POST":
-        # Получение данных из формы
+class ProductDetailView(DetailView):
+    model = Product
+    template_name = 'catalog/product_detail.html'
+    context_object_name = 'product_detail'
+
+
+class ContactTemplateView(TemplateView):
+    template_name = "catalog/contacts.html"
+
+    def post(self, request, *args, **kwargs):
         name = request.POST.get("name")
         message = request.POST.get("message")
-        # Здесь мы возвращаем простой ответ
         return HttpResponse(f"Спасибо, {name}! Ваше сообщение получено.")
-    return render(request, "contacts.html")
-
-
-def product_detail(request, pk):
-    product = get_object_or_404(Product, pk=pk)
-    context = {"product": product}
-    return render(request, "product_detail.html", context)
