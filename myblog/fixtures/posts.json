@@ -1,0 +1,50 @@
+[
+{
+    "model": "myblog.post",
+    "pk": 1,
+    "fields": {
+        "title": "Новый релиз: Django 6.1",
+        "content": "Вышла новая версия Django с улучшенной производительностью и обновлённым админ-интерфейсом.",
+        "preview_image": "myblog/preview/Django.jpeg",
+        "created_at": "2026-10-12T17:31:07.331Z",
+        "is_published": true,
+        "views_count": 0
+    }
+},
+{
+    "model": "myblog.post",
+    "pk": 2,
+    "fields": {
+        "title": "Как ускорить загрузку сайта",
+        "content": "5 проверенных способов оптимизации CSS, JS и изображений для снижения времени отклика.",
+        "preview_image": "myblog/preview/Сайт.jpeg",
+        "created_at": "2026-10-12T17:31:38.481Z",
+        "is_published": true,
+        "views_count": 0
+    }
+},
+{
+    "model": "myblog.post",
+    "pk": 3,
+    "fields": {
+        "title": "Разбор ошибки 500 в Django",
+        "content": "Пошаговый алгоритм поиска причины Internal Server Error: от логов до middleware.",
+        "preview_image": "myblog/preview/ошибки.jpeg",
+        "created_at": "2026-10-12T17:33:50.594Z",
+        "is_published": false,
+        "views_count": 0
+    }
+},
+{
+    "model": "myblog.post",
+    "pk": 4,
+    "fields": {
+        "title": "Тренды веб-разработки 2024",
+        "content": "Обзор ключевых технологий и подходов, которые доминируют в индустрии в текущем году.",
+        "preview_image": "myblog/preview/Вэб.jpeg",
+        "created_at": "2026-10-12T17:34:11.274Z",
+        "is_published": true,
+        "views_count": 0
+    }
+}
+]
