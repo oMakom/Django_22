@@ -11,8 +11,8 @@ from .models import Post
 # Create your views here.
 class PostsListView(ListView):
     model = Post
-    template_name = 'myblog/posts_list.html'
-    context_object_name = 'posts'
+    template_name = "myblog/posts_list.html"
+    context_object_name = "posts"
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -21,8 +21,8 @@ class PostsListView(ListView):
 
 class PostDetailView(DetailView):
     model = Post
-    template_name = 'myblog/post_detail.html'
-    context_object_name = 'post'
+    template_name = "myblog/post_detail.html"
+    context_object_name = "post"
 
     def get_object(self, queryset=None):
         self.object = super().get_object(queryset)
@@ -30,7 +30,7 @@ class PostDetailView(DetailView):
 
         if self.object.views_count == 100:
             send_mail(
-                subject='Поздравляем! Ваш пост достиг 100 просмотров!',
+                subject="Поздравляем! Ваш пост достиг 100 просмотров!",
                 message=f'Пост "{self.object.title}" набрал 100 просмотров.',
                 from_email=settings.DEFAULT_FROM_EMAIL,
                 recipient_list=[settings.DEFAULT_FROM_EMAIL],
@@ -43,19 +43,19 @@ class PostDetailView(DetailView):
 
 class PostCreateView(CreateView):
     model = Post
-    fields = ['title', 'content', 'preview_image', 'is_published']
-    template_name = 'myblog/post_form.html'
-    success_url = reverse_lazy('myblog:posts_list')
+    fields = ["title", "content", "preview_image", "is_published"]
+    template_name = "myblog/post_form.html"
+    success_url = reverse_lazy("myblog:posts_list")
 
 
 class PostUpdateView(UpdateView):
     model = Post
-    fields = ['title', 'content', 'preview_image', 'is_published']
-    template_name = 'myblog/post_form.html'
-    success_url = reverse_lazy('myblog:posts_list')
+    fields = ["title", "content", "preview_image", "is_published"]
+    template_name = "myblog/post_form.html"
+    success_url = reverse_lazy("myblog:posts_list")
 
 
 class PostDeleteView(DeleteView):
     model = Post
-    template_name = 'myblog/post_confirm_delete.html'
-    success_url = reverse_lazy('myblog:posts_list')
+    template_name = "myblog/post_confirm_delete.html"
+    success_url = reverse_lazy("myblog:posts_list")
