@@ -1,0 +1,51 @@
+{% extends 'myblog/base.html' %}
+{% block content %}
+
+        <!-- ПРАВАЯ КОЛОНКА: Контент -->
+        <div class="col p-0 bg-white">
+            <div class="content-wrapper">
+                <h1 class="card-title text-center mb-4"><--MyBlog--></h1>
+                <h5 class="card-title text-center text-muted mb-5">{{post.title}}</h5>
+                {% if post.preview_image %}
+                <div class="text-center">
+                    <img src="{{ post.preview_image.url }}" class="img-fluid rounded mb-3 d-block mx-auto" alt="Фото отсутствует" style="max-height: 250px; object-fit: cover;">
+                </div>
+                {% endif %}
+                <div class="row gx-4">
+
+                    <!-- Товары:  -->
+                    <div class="col-12 mb-4 mb-md-0 px-5">
+                <div class="card product-card h-100">
+                    <div class="card-body d-flex flex-column">
+                        <!-- Контент карточки -->
+                        <div class="card-content-body text-center flex-grow-1">
+                            <h6 class="card-text text-muted mt-3 mb-5">
+                                {{post.content}}
+                            </h6>
+                        </div>
+
+                        <div class="p-3 pt-0 d-flex flex-wrap gap-2 justify-content-center">
+                            <a href="{% url 'myblog:posts_list' %}" class="btn btn-outline-primary flex-grow-1 flex-shrink-0">Назад</a>
+                            <a href="{% url 'myblog:post_edit' post.pk %}" class="btn btn-outline-secondary flex-grow-1 flex-shrink-0">Редактировать</a>
+                            <a href="{% url 'myblog:post_delete' post.pk %}" class="btn btn-outline-danger flex-grow-1 flex-shrink-0">Удалить</a>
+                        </div>
+                         <div class="card-text text-end text-muted small">
+                            Количество просмотров: {{post.views_count}}
+                        </div>
+                        <div class="card-text text-end text-muted small">
+                            {% if post.is_published %}
+                                Опубликован
+                            {% else %}
+                                Не опубликован
+                            {% endif %}
+                            (Дата создания: {{post.created_at}})
+                        </div>
+
+                    </div>
+    </div>
+</div>
+
+                </div>
+            </div>
+        </div>
+{% endblock %}

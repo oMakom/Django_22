@@ -22,17 +22,17 @@ class PostCreateView(CreateView):
     model = Post
     fields = ['title', 'content', 'preview_image', 'is_published']
     template_name = 'myblog/post_form.html'
-    success_url = reverse_lazy('posts_list')
+    success_url = reverse_lazy('myblog:posts_list')
 
 
 class PostUpdateView(UpdateView):
     model = Post
     fields = ['title', 'content', 'preview_image', 'is_published']
     template_name = 'myblog/post_form.html'
-    success_url = reverse_lazy('posts_list')
+    success_url = reverse_lazy('myblog:posts_list')
 
 
 class PostDeleteView(DeleteView):
     model = Post
     template_name = 'myblog/post_confirm_delete.html'
-    success_url = reverse_lazy('posts_list')
+    success_url = reverse_lazy('myblog:posts_list')
