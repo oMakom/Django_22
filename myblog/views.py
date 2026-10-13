@@ -45,15 +45,18 @@ class PostCreateView(CreateView):
     model = Post
     fields = ["title", "content", "preview_image", "is_published"]
     template_name = "myblog/post_form.html"
-    success_url = reverse_lazy("myblog:posts_list")
+
+    def get_success_url(self):
+        return reverse_lazy("myblog:post_detail", kwargs={"pk": self.object.pk})
 
 
 class PostUpdateView(UpdateView):
     model = Post
     fields = ["title", "content", "preview_image", "is_published"]
     template_name = "myblog/post_form.html"
-    success_url = reverse_lazy("myblog:posts_list")
-
+    
+    def get_success_url(self):
+        return reverse_lazy("myblog:post_detail", kwargs={"pk": self.object.pk})
 
 class PostDeleteView(DeleteView):
     model = Post

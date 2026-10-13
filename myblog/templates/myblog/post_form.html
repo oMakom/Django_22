@@ -13,6 +13,10 @@
             Создать
             {% endif %}
         </button>
-        <a href="{% url 'myblog:posts_list' %}" class="btn btn-secondary">Отмена</a>
+            {% if object %}
+            <a href="{% url 'myblog:post_detail' object.pk %}" class="btn btn-secondary">Отмена</a>
+            {% else %}
+            <a href="{% url 'myblog:posts_list' %}" class="btn btn-secondary">Отмена</a>
+            {% endif %}
     </form>
 {% endblock %}
