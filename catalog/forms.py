@@ -11,16 +11,49 @@ class CatalogForm(ModelForm):
         model = Product
         fields = ["name", "description", "price", "category", "image"]
 
+    def __init__(self, *args, **kwargs):
+        super(CatalogForm, self).__init__(*args, **kwargs)
+
+        # Настройка атрибутов виджета для поля 'name'
+        self.fields['name'].widget.attrs.update({
+            'class': 'form-control',  # Добавление CSS-класса для стилизации поля
+            'placeholder': 'Введите наименование'  # Текст подсказки внутри поля
+        })
+
+        # Настройка атрибутов виджета для поля 'description'
+        self.fields['description'].widget.attrs.update({
+            'class': 'form-control',  # Добавление CSS-класса для стилизации поля
+            'placeholder': 'укажите описание'  # Текст подсказки внутри поля
+        })
+
+        # Настройка атрибутов виджета для поля 'image'
+        self.fields['image'].widget.attrs.update({
+            'class': 'form-control',  # Добавление CSS-класса для стилизации поля
+            'placeholder': 'укажите фото продукта'
+        })
+
+        # Настройка атрибутов виджета для поля 'category'
+        self.fields['category'].widget.attrs.update({
+            'class': 'form-control',  # Добавление CSS-класса для стилизации поля
+            'placeholder': 'укажите категорию'
+        })
+
+        # Настройка атрибутов виджета для поля 'price'
+        self.fields['price'].widget.attrs.update({
+            'class': 'form-control',  # Добавление CSS-класса для стилизации поля
+            'placeholder': 'Введите цену'  # Текст подсказки внутри поля
+        })
+
     def clean(self):
         cleaned_data = super().clean()
         name = cleaned_data.get("name")
         description = cleaned_data.get("description")
 
         if name and any(spam in name.lower() for spam in SPAM_WORDS):
-            raise ValidationError({"name": "Name не может содержать спам‑слова"})
+            raise ValidationError({"name": "Наименование не может содержать спам‑слова"})
 
         if description and any(spam in description.lower() for spam in SPAM_WORDS):
-            raise ValidationError({"description": "Description не может содержать спам‑слова"})
+            raise ValidationError({"description": "Описание не может содержать спам‑слова"})
 
         return cleaned_data
 
