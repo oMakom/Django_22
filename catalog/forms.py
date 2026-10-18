@@ -1,12 +1,25 @@
 from django.core.exceptions import ValidationError
-from django.forms import ModelForm
+from django.core.validators import FileExtensionValidator
+from django.forms import ModelForm, ImageField
 
 from catalog.models import Product
 
 SPAM_WORDS = {"казино", "криптовалюта", "крипта", "биржа", "дешево", "бесплатно", "обман", "полиция", "радар"}
 
+def validate_image_size(value):
+    max_size = 5 * 1024 * 1024  # 5 МБ
+    if value.size > max_size:
+        raise ValidationError("Файл слишком большой. Максимальный размер: 5 МБ.")
 
 class CatalogForm(ModelForm):
+    image = ImageField(
+        required=False,
+        validators=[
+            FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'png']),
+            validate_image_size,
+        ],
+    )
+
     class Meta:
         model = Product
         fields = ["name", "description", "price", "category", "image"]
@@ -29,7 +42,6 @@ class CatalogForm(ModelForm):
         # Настройка атрибутов виджета для поля 'image'
         self.fields['image'].widget.attrs.update({
             'class': 'form-control',  # Добавление CSS-класса для стилизации поля
-            'placeholder': 'укажите фото продукта'
         })
 
         # Настройка атрибутов виджета для поля 'category'
