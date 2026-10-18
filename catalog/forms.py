@@ -15,7 +15,7 @@ class CatalogForm(ModelForm):
     image = ImageField(
         required=False,
         validators=[
-            FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'png']),
+            FileExtensionValidator(allowed_extensions=['jpeg', 'png']),
             validate_image_size,
         ],
     )
