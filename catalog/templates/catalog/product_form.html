@@ -1,0 +1,23 @@
+{% extends 'catalog/base.html' %}
+{% block content %}
+
+        <!-- ПРАВАЯ КОЛОНКА: Контент -->
+        <h2>Форма продукта</h2>
+    <form method="post">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">
+            {% if object %}
+            Сохранить
+            {% else %}
+            Создать
+            {% endif %}
+        </button>
+            {% if object %}
+            <a href="{% url 'catalog:product_detail' object.pk %}" class="btn btn-secondary">Отмена</a>
+            {% else %}
+            <a href="{% url 'catalog:home' %}" class="btn btn-secondary">Отмена</a>
+            {% endif %}
+    </form>
+{% endblock %}

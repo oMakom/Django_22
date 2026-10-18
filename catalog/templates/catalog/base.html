@@ -37,8 +37,10 @@
         <!-- ЛЕВАЯ КОЛОНКА: МЕНЮ -->
         {% include 'catalog/includes/inc_menu.html' %}
         <!-- правая КОЛОНКА -->
-        {% block content %}
-        {% endblock %}
+        <div class="col d-flex flex-column">
+            {% block content %}
+            {% endblock %}
+        </div>
 
     </div>
 
