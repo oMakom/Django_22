@@ -1,4 +1,4 @@
-from xml.dom import ValidationErr
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from django.http import HttpResponse
 
@@ -16,13 +16,13 @@ class ProductsListView(ListView):
     context_object_name = "products"
 
 
-class ProductDetailView(DetailView):
+class ProductDetailView(LoginRequiredMixin, DetailView):
     model = Product
     template_name = "catalog/product_detail.html"
     context_object_name = "product"
 
 
-class ProductsCreateView(CreateView):
+class ProductsCreateView(LoginRequiredMixin, CreateView):
     model = Product
     form_class = CatalogForm
     template_name = "catalog/product_form.html"
@@ -31,7 +31,7 @@ class ProductsCreateView(CreateView):
         return reverse_lazy("catalog:product_detail", kwargs={"pk": self.object.pk})
 
 
-class ProductsUpdateView(UpdateView):
+class ProductsUpdateView(LoginRequiredMixin, UpdateView):
     model = Product
     form_class = CatalogForm
     template_name = "catalog/product_form.html"
@@ -40,7 +40,7 @@ class ProductsUpdateView(UpdateView):
         return reverse_lazy("catalog:product_detail", kwargs={"pk": self.object.pk})
 
 
-class ProductsDeleteView(DeleteView):
+class ProductsDeleteView(LoginRequiredMixin, DeleteView):
     model = Product
     template_name = "catalog/product_confirm_delete.html"
     success_url = reverse_lazy("catalog:home")
