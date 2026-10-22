@@ -31,6 +31,7 @@
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
                             {% if user.is_authenticated %}
+                                <li><a class="dropdown-item" href="{% url 'users:profile_edit' %}">Профиль</a></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li class="dropdown-item">
                                     <form method="post" action="{% url 'users:logout' %}" style="display: inline">
