@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'catalog',
-    'myblog'
+    'myblog',
+    'users'
 ]
 
 MIDDLEWARE = [
@@ -140,3 +141,5 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.getenv('MAIL_USER')
 EMAIL_HOST_PASSWORD = os.getenv('MAIL_PASSWORD')
 DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
+
+AUTH_USER_MODEL = 'users.User'
