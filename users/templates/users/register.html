@@ -1,0 +1,10 @@
+{% extends 'catalog/base.html' %}
+{% block content %}
+        <!-- ПРАВАЯ КОЛОНКА: Контент -->
+        <h2>Регистрация</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Регистрация</button>
+    </form>
+{% endblock %}
