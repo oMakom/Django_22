@@ -1,6 +1,8 @@
 from django.core.exceptions import ValidationError
 from django.core.validators import FileExtensionValidator
 from django.forms import ModelForm, ImageField
+from django.forms.widgets import CheckboxInput
+from django import forms
 
 from catalog.models import Product
 
@@ -24,9 +26,10 @@ class CatalogForm(ModelForm):
 
     class Meta:
         model = Product
-        fields = ["name", "description", "price", "category", "image"]
+        fields = ["name", "description", "price", "category", "image", "is_published"]
 
     def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop("user", None)
         super(CatalogForm, self).__init__(*args, **kwargs)
 
         # Настройка атрибутов виджета для поля 'name'
@@ -64,6 +67,12 @@ class CatalogForm(ModelForm):
                 "placeholder": "Введите цену",  # Текст подсказки внутри поля
             }
         )
+        if self.user and self.user.has_perm("catalog.can_unpublish_product"):
+            self.fields["is_published"].widget = CheckboxInput(attrs={"class": "form-check-input"})
+            self.fields["is_published"].label = "Опубликовать продукт"
+        else:
+            self.fields.pop("is_published", None)
+
 
     def clean(self):
         cleaned_data = super().clean()

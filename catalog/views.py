@@ -1,4 +1,4 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
 from django.http import HttpResponse
 
@@ -36,14 +36,20 @@ class ProductsUpdateView(LoginRequiredMixin, UpdateView):
     form_class = CatalogForm
     template_name = "catalog/product_form.html"
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
+
     def get_success_url(self):
         return reverse_lazy("catalog:product_detail", kwargs={"pk": self.object.pk})
 
 
-class ProductsDeleteView(LoginRequiredMixin, DeleteView):
+class ProductsDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     model = Product
     template_name = "catalog/product_confirm_delete.html"
     success_url = reverse_lazy("catalog:home")
+    permission_required = 'catalog.delete_product'
 
 
 class ContactTemplateView(TemplateView):

@@ -32,6 +32,7 @@ class Product(models.Model):
     )
     created_at = models.DateField(auto_now_add=True, verbose_name="Дата создания")
     updated_at = models.DateField(auto_now=True, verbose_name="Дата последнего изменения")
+    is_published = models.BooleanField(default=False, verbose_name="признак публикации")
 
     def __str__(self):
         return f"{self.name}: {self.price}"
@@ -40,6 +41,7 @@ class Product(models.Model):
         verbose_name = "Продукт"
         verbose_name_plural = "Продукты"
         ordering = ["name"]
+        permissions = [('can_unpublish_product', 'Can unpublish product'),]
 
 
 class Contact(models.Model):
