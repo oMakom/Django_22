@@ -28,6 +28,14 @@ class CatalogForm(ModelForm):
         model = Product
         fields = ["name", "description", "price", "category", "image", "is_published"]
 
+    def save(self, commit=True, user=None):
+        instance = super().save(commit=False)
+        if user:
+            instance.owner = user
+        if commit:
+            instance.save()
+        return instance
+
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop("user", None)
         super(CatalogForm, self).__init__(*args, **kwargs)
@@ -72,7 +80,6 @@ class CatalogForm(ModelForm):
             self.fields["is_published"].label = "Опубликовать продукт"
         else:
             self.fields.pop("is_published", None)
-
 
     def clean(self):
         cleaned_data = super().clean()
