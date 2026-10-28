@@ -1,6 +1,9 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.core.exceptions import PermissionDenied
 
 from django.http import HttpResponse
+from django.shortcuts import get_object_or_404, redirect
+from django.views import View
 
 from .forms import CatalogForm
 from .models import Product
@@ -30,11 +33,29 @@ class ProductsCreateView(LoginRequiredMixin, CreateView):
     def get_success_url(self):
         return reverse_lazy("catalog:product_detail", kwargs={"pk": self.object.pk})
 
+    def form_valid(self, form):
+        form.instance.owner = self.request.user
+        return super().form_valid(form)
+
 
 class ProductsUpdateView(LoginRequiredMixin, UpdateView):
     model = Product
     form_class = CatalogForm
     template_name = "catalog/product_form.html"
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["user"] = self.request.user
+        return kwargs
+
+    def get_object(self, queryset=None):
+        obj = super().get_object(queryset)
+        is_owner = obj.owner == self.request.user
+        is_super = self.request.user.is_superuser
+        has_delete_perm = self.request.user.has_perm("catalog.delete_product")
+        if not (is_owner or is_super or has_delete_perm):
+            raise PermissionDenied
+        return obj
 
     def get_success_url(self):
         return reverse_lazy("catalog:product_detail", kwargs={"pk": self.object.pk})
@@ -45,6 +66,15 @@ class ProductsDeleteView(LoginRequiredMixin, DeleteView):
     template_name = "catalog/product_confirm_delete.html"
     success_url = reverse_lazy("catalog:home")
 
+    def get_object(self, queryset=None):
+        obj = super().get_object(queryset)
+
+        is_owner = obj.owner == self.request.user
+        has_delete_perm = self.request.user.has_perm("catalog.delete_product")
+        if not (is_owner or has_delete_perm):
+            raise PermissionDenied
+        return obj
+
 
 class ContactTemplateView(TemplateView):
     template_name = "catalog/contacts.html"
@@ -53,3 +83,18 @@ class ContactTemplateView(TemplateView):
         name = request.POST.get("name")
         message = request.POST.get("message")
         return HttpResponse(f"Спасибо, {name}! Ваше сообщение получено.")
+
+
+class ProductTogglePublishView(LoginRequiredMixin, View):
+    def post(self, request, pk):
+        product = get_object_or_404(Product, pk=pk)
+
+        has_perm = request.user.has_perm("catalog.can_unpublish_product")
+
+        if not has_perm:
+            raise PermissionDenied
+
+        product.is_published = not product.is_published
+        product.save(update_fields=["is_published"])
+
+        return redirect("catalog:product_detail", pk=product.pk)
