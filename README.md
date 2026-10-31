@@ -10,6 +10,16 @@ https://github.com/oMakom/CoursePaperOOP_DB.git
 pip install -r requirements.txt
 poetry install
 ```
+3. Загрузка группы модераторов: 
+- примените миграции
+```
+py manage.py migrate
+```
+- `pk` у разрешения и у группы — любые уникальные числа (`не null`). Если объекты уже есть в БД, берите их реальные `id`
+- загрузите разрешения и группы:
+```
+py manage.py loaddata catalog/fixtures/groups.json
+```
 Проект подготовлен на Django.
 
 В приложении `catalog` реализованы домашняя страница `home.html`, страница c информацией по товару `product_detail.html`

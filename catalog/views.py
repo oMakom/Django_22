@@ -52,8 +52,8 @@ class ProductsUpdateView(LoginRequiredMixin, UpdateView):
         obj = super().get_object(queryset)
         is_owner = obj.owner == self.request.user
         is_super = self.request.user.is_superuser
-        has_delete_perm = self.request.user.has_perm("catalog.delete_product")
-        if not (is_owner or is_super or has_delete_perm):
+        has_change_perm = self.request.user.has_perm("catalog.can_unpublish_product")
+        if not (is_owner or is_super or has_change_perm):
             raise PermissionDenied
         return obj
 
@@ -70,8 +70,9 @@ class ProductsDeleteView(LoginRequiredMixin, DeleteView):
         obj = super().get_object(queryset)
 
         is_owner = obj.owner == self.request.user
+        is_super = self.request.user.is_superuser
         has_delete_perm = self.request.user.has_perm("catalog.delete_product")
-        if not (is_owner or has_delete_perm):
+        if not (is_owner or is_super or has_delete_perm):
             raise PermissionDenied
         return obj
 
