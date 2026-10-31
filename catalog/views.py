@@ -3,7 +3,9 @@ from django.core.exceptions import PermissionDenied
 
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect
+from django.utils.decorators import method_decorator
 from django.views import View
+from django.views.decorators.cache import cache_page
 
 from .forms import CatalogForm
 from .models import Product
@@ -18,7 +20,7 @@ class ProductsListView(ListView):
     template_name = "catalog/home.html"
     context_object_name = "products"
 
-
+@method_decorator(cache_page(60 * 5), name='dispatch')
 class ProductDetailView(LoginRequiredMixin, DetailView):
     model = Product
     template_name = "catalog/product_detail.html"
