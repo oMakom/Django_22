@@ -1,4 +1,5 @@
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.cache import cache
 from django.core.exceptions import PermissionDenied
 
 from django.http import HttpResponse
@@ -7,6 +8,7 @@ from django.utils.decorators import method_decorator
 from django.views import View
 from django.views.decorators.cache import cache_page
 
+from config.settings import CACHE_ENABLED
 from .forms import CatalogForm
 from .models import Product, Category
 from django.urls import reverse_lazy
@@ -21,6 +23,17 @@ class ProductsListView(ListView):
     model = Product
     template_name = "catalog/home.html"
     context_object_name = "products"
+
+    def get_queryset(self):
+        cache_key = "products_all"
+        if not CACHE_ENABLED:
+            return super().get_queryset()
+        cached_qs = cache.get(cache_key)
+        if cached_qs is not None:
+            return cached_qs
+        qs = super().get_queryset()
+        cache.set(cache_key, qs, timeout=300)
+        return qs
 
 
 class CategoriesListView(ListView):
@@ -39,8 +52,13 @@ class CategoryProductsListView(ListView):
         self.category = get_object_or_404(Category, id=category_id)
         return get_products_from_cache_by_category(category_id)
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["category"] = self.category
+        return context
 
-# @method_decorator(cache_page(60 * 5), name='dispatch')
+
+@method_decorator(cache_page(60 * 5), name='dispatch')
 class ProductDetailView(LoginRequiredMixin, DetailView):
     model = Product
     template_name = "catalog/product_detail.html"
