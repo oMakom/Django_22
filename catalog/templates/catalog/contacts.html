@@ -1,0 +1,60 @@
+{% extends 'catalog/base.html' %}
+{% block content %}
+        <!-- ПРАВАЯ КОЛОНКА: Контент (форма) -->
+        <div class="col p-0 bg-white">
+            <div class="content-wrapper">
+
+                <h1 class="card-title mb-5 text-center">Контакты</h1>
+                <div class="row gx-5 align-items-start">
+                    <!-- Колонка 1: Форма -->
+                    <div class="col-12 col-md-5 mb-4 mb-md-0">
+                        <div class="card border p-4 h-100">
+                            <form action="" method="POST">
+                                {% csrf_token %}
+                                <!-- Имя -->
+                                <div class="mb-4">
+                                    <label for="name" class="form-label text-uppercase fw-bold small text-secondary">Имя</label>
+                                    <input type="text" class="form-control" id="name" name="name" placeholder="Ваше имя" required>
+                                </div>
+
+                                <!-- Почта -->
+                                <div class="mb-4">
+                                    <label for="email" class="form-label text-uppercase fw-bold small text-secondary">Почта</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-white text-muted fw-bold">@</span>
+                                        <input type="email" class="form-control" id="email" name="email" placeholder="example@mail.com" required>
+                                    </div>
+                                </div>
+
+                                <!-- Сообщение -->
+                                <div class="mb-4">
+                                    <label for="message" class="form-label text-uppercase fw-bold small text-secondary">Сообщение</label>
+                                    <textarea class="form-control" id="message" name="message" rows="4" placeholder="Ваше сообщение" required></textarea>
+                                </div>
+
+                                <!-- Кнопка -->
+                                <button type="submit" class="btn btn-primary">Отправить</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Колонка 2: Текст "Наши контакты" -->
+                    <div class="col-12 col-md-7 d-flex align-items-start">
+                        <div class="contact-info-text">
+                            <h3 class="fw-bold mb-3">Наши контакты</h3>
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                            </p>
+                            <p class="text-muted">
+                               Хотя эти стили обратной связи нельзя настроить с помощью CSS, вы всё ещё можете кастомизировать текст обратной связи через JavaScript
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}

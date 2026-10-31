@@ -1,0 +1,40 @@
+{% extends 'catalog/base.html' %}
+{% block content %}
+
+        <!-- ПРАВАЯ КОЛОНКА: Контент -->
+        <div class="col p-0 bg-white">
+            <div class="content-wrapper">
+                <h1 class="card-title text-center mb-4">Главная</h1>
+                <p class="card-title text-center text-muted mb-5">Вы находитесь на сайте, предназначенном для продажи товаров</p>
+
+                <div class="row gx-4">
+
+                    <!-- Товары:  -->
+                    {% for product in products %}
+                    <div class="col-12 col-md-4 mb-4 mb-md-0">
+                        <div class="card product-card h-100">
+                            <div class="card-body d-flex flex-column">
+                                <!-- Серая шапка -->
+                                <div class="card-header-custom">
+                                    <h5 class="card-title m-0 fw-bold text-dark">{{product.name}}</h5>
+                                </div>
+                                <!-- Контент карточки -->
+                                <div class="card-content-body">
+                                    <h3 class="card-text text-center fw-bold mb-3">{{product.price}}</h3>
+                                    <p class="card-text text-center text-muted small flex-grow-1">
+                                        {{product.description|truncatechars:100}}
+                                    </p>
+                                </div>
+                                <div class="p-3 pt-0">
+                                    <a href="{% url 'catalog:product_detail' product.pk %}"
+                                       class="btn btn-outline-primary w-100">Просмотр</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                </div>
+            </div>
+        </div>
+{% endblock %}

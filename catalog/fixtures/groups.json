@@ -1,0 +1,33 @@
+[
+{
+    "model": "auth.permission",
+    "pk": 41,
+    "fields": {
+        "name": "Can unpublish product",
+        "content_type": [
+            "catalog",
+            "product"
+        ],
+        "codename": "can_unpublish_product"
+    }
+},
+{
+    "model": "auth.group",
+    "pk": 1,
+    "fields": {
+        "name": "Модератор продуктов",
+        "permissions": [
+            [
+                "can_unpublish_product",
+                "catalog",
+                "product"
+            ],
+            [
+                "delete_product",
+                "catalog",
+                "product"
+            ]
+        ]
+    }
+}
+]
