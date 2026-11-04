@@ -26,7 +26,16 @@
                             <!-- Тело карточки -->
                             <div class="card-body flex-grow-1 d-flex flex-column">
                                 <p class="card-text mb-auto" o>Цена: {{product.price}} руб.</p>
-                                <p class="card-text mb-auto">Категория: {{product.category}}.</p>
+                                <p class="card-text mb-auto">
+                                    Категория:
+                                    {% if product.category %}
+                                        <a href="{% url 'catalog:category_products' product.category.id %}">
+                                            {{ product.category.name }}
+                                        </a>
+                                    {% else %}
+                                        Не указана
+                                    {% endif %}
+                                </p>
                                 <p class="card-text mb-auto">Описние: {{product.description}}.</p>
 
                                 <!-- Нижняя панель -->
